@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <p class="h1 text-success text-center">Phòng Trống</p>
+    </div>
+    <div class="col-sm text-danger text-center">
+      <p class="h1">Phòng Có Khách</p>
+    </div>
+    <div class="col-sm text-secondary text-center">
+      <p class="h1">Phòng Dơ</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <p class="h1 text-success text-center">{{vacant}}</p>
+    </div>
+    <div class="col-sm text-danger text-center">
+      <p class="h1">{{occupied}}</p>
+    </div>
+    <div class="col-sm text-secondary text-center">
+      <p class="h1">{{dirty}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <p class="h1 text-info text-center">Tổng Tiền Phòng</p>
+    </div>
+    <div class="col-sm text-primary text-center">
+      <p class="h1">Tổng Thu - Chi</p>
+    </div>
+    <div class="col-sm text-warning text-center">
+      <p class="h1">Tiền Mặt Hiện Có</p>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Phòng</th>
+        <th scope="col">Giảm Giá</th>
+        <th scope="col">Điều Chỉnh</th>
+        <th scope="col">Tổng Cộng</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <th scope="row">{{order.roomId}}</th>
+        <td>{{order.discount | number}}</td>
+        <td>{{order.adjustment | number}}</td>
+        <td>{{order.total | number }}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>Tổng Cộng</td>
+        <td>{{total}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
