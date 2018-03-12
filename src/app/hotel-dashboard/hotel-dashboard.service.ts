@@ -9,20 +9,26 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const baseURI = `http://localhost:3000/api`;
+const baseURI = `https://api.mlab.com/api/1/databases/hoanglong/collections`;
+const apiKey = `oACmHhkBLWP1cJKQpX-rrA88rgsHROS6`;
 @Injectable()
 export class HotelDashboardService {
 
   constructor(
     private http: HttpClient
   ) { }
-  getRooms(): Observable<Response> {
-    const roomURI = `${baseURI}/room`;
-    return this.http.get<Response>(roomURI);
+  getRooms(): Observable<any[]> {
+    const roomURI = `${baseURI}/rooms?apiKey=${apiKey}`;
+    return this.http.get<any[]>(roomURI);
   }
-  getOrders(): Observable<Response> {
-    const orderURI = `${baseURI}/order`;
-    return this.http.get<Response>(orderURI);
+  getOrders(): Observable<any[]> {
+    const orderURI = `${baseURI}/orders?apiKey=${apiKey}`;
+    return this.http.get<any[]>(orderURI);
+  }
+
+  getExpense(): Observable<any[]> {
+    const expenseURI = `${baseURI}/expenses?apiKey=${apiKey}`;
+    return this.http.get<any[]>(expenseURI);
   }
 }
 

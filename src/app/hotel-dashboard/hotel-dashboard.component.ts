@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./hotel-dashboard.component.css'],
   providers: [ HotelDashboardService ]
 })
+
 export class HotelDashboardComponent implements OnInit {
   rooms: Room[] = [];
   orders: Order[] = [];
@@ -17,6 +18,8 @@ export class HotelDashboardComponent implements OnInit {
   vacant: Number;
   dirty: Number;
   total: Number = 0;
+  expenses: any[];
+  totalExpense: Number = 0;
   constructor(
     private service: HotelDashboardService
   ) { }
@@ -24,23 +27,39 @@ export class HotelDashboardComponent implements OnInit {
   ngOnInit() {
     this.service.getRooms().subscribe(
       res => {
-        this.rooms = res.data;
-        this.vacant = res.data.filter(r => r.status === '1').length;
-        this.occupied = res.data.filter(r => r.status === '0').length;
-        this.dirty = res.data.filter(r => r.status === '2').length;
-        this.service.getOrders().subscribe( orders => {
-          this.orders = orders.data;
-          this.orders.forEach(element => {
-            element.roomId = this.rooms.find(r => element.roomId === r._id).name;
-          });
-          this.total = this.orders.reduce(add, 0);
-          function add(a, b) {
-              return +a.total + +b.total;
+        this.rooms = res;
+        this.vacant = res.filter(r => r.status === '1').length;
+        this.occupied = res.filter(r => r.status === '0').length;
+        this.dirty = res.filter(r => r.status === '2').length;
+        this.rooms.forEach(room => {
+          switch (room.status) {
+            case '0': room.status = 'Có Khách'; break;
+            case '1': room.status = 'Trống' ; break;
+            case '2': room.status = 'Dơ' ; break;
+            default: room.status = '';
           }
+        });
+        this.service.getOrders().subscribe( orders => {
+          this.orders = orders
+            .filter((o: Order) => o.total !== 0 &&
+              new Date(o.checkOutTime.$date).getDate() === new Date().getDate() &&
+              new Date (o.checkOutTime.$date).getMonth() === new Date().getMonth() &&
+              new Date (o.checkOutTime.$date).getFullYear() === new Date().getFullYear());
+          this.orders.forEach( o => {
+            this.total = +this.total + +o.total;
+          });
+        });
+        this.service.getExpense().subscribe(expenses => {
+          this.expenses = expenses
+            .filter(e => new Date(e.createdAt.$date).getDate() === new Date().getDate() &&
+              new Date(e.createdAt.$date).getMonth() === new Date().getMonth() &&
+              new Date(e.createdAt.$date).getFullYear() === new Date().getFullYear());
+          this.expenses.forEach(e => {
+            this.totalExpense = +this.totalExpense + +e.amount;
+          });
         });
       }
     );
-   
   }
 
 }

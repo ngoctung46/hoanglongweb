@@ -32,28 +32,76 @@
       <p class="h1">Tiền Mặt Hiện Có</p>
     </div>
   </div>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">Phòng</th>
-        <th scope="col">Giảm Giá</th>
-        <th scope="col">Điều Chỉnh</th>
-        <th scope="col">Tổng Cộng</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let order of orders">
-        <th scope="row">{{order.roomId}}</th>
-        <td>{{order.discount | number}}</td>
-        <td>{{order.adjustment | number}}</td>
-        <td>{{order.total | number }}</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td>Tổng Cộng</td>
-        <td>{{total}}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="row">
+    <div class="col-sm">
+      <p class="h1 text-info text-center">{{total| number}}</p>
+    </div>
+    <div class="col-sm text-primary text-center">
+      <p class="h1">{{ totalExpense | number }}</p>
+    </div>
+    <div class="col-sm text-warning text-center">
+      <p class="h1">{{ (total + +totalExpense) | number }}</p>
+    </div>
+  </div>
+  <h2 class='text-center text-success'>Thống Kê Tình Trạng Phòng</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Phòng</th>
+          <th scope="col">Tình Trạng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let room of rooms">
+          <th [ngClass]="{'text-success': room.status === 'Trống', 'text-secondary': room.status === 'Dơ', 'text-danger': room.status==='Có Khách'}" scope="row">{{room.name}}</th>
+          <th [ngClass]="{'text-success': room.status === 'Trống', 'text-secondary': room.status === 'Dơ', 'text-danger': room.status==='Có Khách'}">{{room.status}}</th>
+        </tr>
+      </tbody>
+    </table>
+    <h2 class='text-center text-info'>Báo Cáo Tiền Phòng</h2>
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Phòng</th>
+          <th scope="col">Giảm Giá</th>
+          <th scope="col">Điều Chỉnh</th>
+          <th scope="col">Tổng Cộng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <th scope="row">{{order.roomName}}</th>
+          <td>{{order.discount | number}}</td>
+          <td>{{order.adjustment | number}}</td>
+          <td>{{order.total | number }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <th class="text-danger">Tổng Cộng</th>
+          <th class="text-danger">{{total | number}}</th>
+        </tr>
+      </tbody>
+    </table>
+    <h2 class='text-center text-warning'>Báo Cáo Thu Chi</h2>
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Tên Khoản Thu - Chi</th>
+          <th scope="col">Số Tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let expense of expenses">
+          <td scope="row">{{expense.description}}</td>
+          <td>{{expense.amount | number}}</td>
+        </tr>
+        <tr>
+          <th class="text-danger">Tổng Cộng</th>
+          <th class="text-danger">{{totalExpense | number}}</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

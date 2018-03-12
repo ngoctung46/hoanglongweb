@@ -1,9 +1,10 @@
 export interface Order {
     _id?: String;
     customerId: String;
+    roomName: String;
     roomId: String;
-    checkInTime: Date;
-    checkOutTime: Date;
+    checkInTime: any;
+    checkOutTime: any;
     discount: Number;
     adjustment: Number;
     total: Number;
