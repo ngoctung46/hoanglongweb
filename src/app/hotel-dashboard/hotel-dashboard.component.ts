@@ -20,6 +20,7 @@ export class HotelDashboardComponent implements OnInit {
   total: Number = 0;
   expenses: any[];
   totalExpense: Number = 0;
+  sum: Number = 0;
   constructor(
     private service: HotelDashboardService
   ) { }
@@ -58,6 +59,7 @@ export class HotelDashboardComponent implements OnInit {
             this.totalExpense = +this.totalExpense + +e.amount;
           });
         });
+        this.sum = +this.total + +this.totalExpense;
       }
     );
   }

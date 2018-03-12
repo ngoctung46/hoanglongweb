@@ -1,107 +1,169 @@
 <div class="container">
+  <h1 class="text-center">QUẢN LÝ KHÁCH SẠN HOÀNG LONG</h1>
   <div class="row">
     <div class="col-sm">
-      <p class="h1 text-success text-center">Phòng Trống</p>
+        <div class="card">
+            <div class="card-header text-center text-white bg-success">
+              Phòng Trống
+            </div>
+            <div class="card-body">
+                <p class="h1 text-success text-center text-success">{{vacant}}</p>
+            </div>
+          </div>
     </div>
     <div class="col-sm text-danger text-center">
-      <p class="h1">Phòng Có Khách</p>
+        <div class="card">
+            <div class="card-header text-center text-white bg-danger">
+              Phòng Có Khách
+            </div>
+            <div class="card-body">
+                <p class="h1 text-danger text-center">{{occupied}}</p>
+            </div>
+          </div>
     </div>
     <div class="col-sm text-secondary text-center">
-      <p class="h1">Phòng Dơ</p>
+        <div class="card">
+            <div class="card-header text-center text-white bg-secondary">
+              Phòng Dơ
+            </div>
+            <div class="card-body">
+                <p class="h1 text-secondary text-center">{{dirty}}</p>
+            </div>
+          </div>
     </div>
   </div>
+  <br/>
+  <br/>
   <div class="row">
     <div class="col-sm">
-      <p class="h1 text-success text-center">{{vacant}}</p>
-    </div>
-    <div class="col-sm text-danger text-center">
-      <p class="h1">{{occupied}}</p>
-    </div>
-    <div class="col-sm text-secondary text-center">
-      <p class="h1">{{dirty}}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm">
-      <p class="h1 text-info text-center">Tổng Tiền Phòng</p>
+        <div class="card">
+            <div class="card-header text-center text-white bg-info">
+              Tổng Tiền Phòng
+            </div>
+            <div class="card-body">
+                <p class="h1 text-info text-center">{{ total | number }}</p>
+            </div>
+          </div>
     </div>
     <div class="col-sm text-primary text-center">
-      <p class="h1">Tổng Thu - Chi</p>
+        <div class="card">
+            <div class="card-header text-center text-white bg-primary">
+              Tổng Thu Chi
+            </div>
+            <div class="card-body">
+                <p class="h1 text-primary text-center">{{ totalExpense | number }}</p>
+            </div>
+          </div>
     </div>
     <div class="col-sm text-warning text-center">
-      <p class="h1">Tiền Mặt Hiện Có</p>
+        <div class="card">
+            <div class="card-header text-white bg-warning">
+              Tiền Mặt Hiện Có
+            </div>
+            <div class="card-body">
+                <p class="h1 text-warning text-center">{{ total -- totalExpense | number}}</p>
+            </div>
+          </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm">
-      <p class="h1 text-info text-center">{{total| number}}</p>
+  <br/>
+  <br/>
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header bg-info" id="headingOne">
+        <h5 class="mb-0">
+          <button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Thống Kê Tình Trạng Phòng
+          </button>
+        </h5>
+      </div>
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Phòng</th>
+                <th scope="col">Tình Trạng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let room of rooms">
+                <th [ngClass]="{'text-success': room.status === 'Trống', 'text-secondary': room.status === 'Dơ', 'text-danger': room.status==='Có Khách'}"
+                  scope="row">{{room.name}}</th>
+                <th [ngClass]="{'text-success': room.status === 'Trống', 'text-secondary': room.status === 'Dơ', 'text-danger': room.status==='Có Khách'}">{{room.status}}</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    <div class="col-sm text-primary text-center">
-      <p class="h1">{{ totalExpense | number }}</p>
+    <div class="card">
+      <div class="card-header bg-success" id="headingTwo">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed text-white" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Thống Kê Tiền Phòng
+          </button>
+        </h5>
+      </div>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Phòng</th>
+                <th scope="col">Giảm Giá</th>
+                <th scope="col">Điều Chỉnh</th>
+                <th scope="col">Tổng Cộng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of orders">
+                <th scope="row">{{order.roomName}}</th>
+                <td>{{order.discount | number}}</td>
+                <td>{{order.adjustment | number}}</td>
+                <td>{{order.total | number }}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <th class="text-danger">Tổng Cộng</th>
+                <th class="text-danger">{{total | number}}</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    <div class="col-sm text-warning text-center">
-      <p class="h1">{{ (total + +totalExpense) | number }}</p>
+    <div class="card">
+      <div class="card-header bg-danger" id="headingThree">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed text-white" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Thống Kê Thu Chi
+          </button>
+        </h5>
+      </div>
+      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Tên Khoản Thu - Chi</th>
+                <th scope="col">Số Tiền</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let expense of expenses">
+                <td scope="row">{{expense.description}}</td>
+                <td>{{expense.amount | number}}</td>
+              </tr>
+              <tr>
+                <th class="text-danger">Tổng Cộng</th>
+                <th class="text-danger">{{totalExpense | number}}</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
-  <h2 class='text-center text-success'>Thống Kê Tình Trạng Phòng</h2>
-  <div class="table-responsive">
-    <table class="table table-striped table-sm">
-      <thead>
-        <tr>
-          <th scope="col">Phòng</th>
-          <th scope="col">Tình Trạng</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let room of rooms">
-          <th [ngClass]="{'text-success': room.status === 'Trống', 'text-secondary': room.status === 'Dơ', 'text-danger': room.status==='Có Khách'}" scope="row">{{room.name}}</th>
-          <th [ngClass]="{'text-success': room.status === 'Trống', 'text-secondary': room.status === 'Dơ', 'text-danger': room.status==='Có Khách'}">{{room.status}}</th>
-        </tr>
-      </tbody>
-    </table>
-    <h2 class='text-center text-info'>Báo Cáo Tiền Phòng</h2>
-    <table class="table table-striped table-sm">
-      <thead>
-        <tr>
-          <th scope="col">Phòng</th>
-          <th scope="col">Giảm Giá</th>
-          <th scope="col">Điều Chỉnh</th>
-          <th scope="col">Tổng Cộng</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let order of orders">
-          <th scope="row">{{order.roomName}}</th>
-          <td>{{order.discount | number}}</td>
-          <td>{{order.adjustment | number}}</td>
-          <td>{{order.total | number }}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <th class="text-danger">Tổng Cộng</th>
-          <th class="text-danger">{{total | number}}</th>
-        </tr>
-      </tbody>
-    </table>
-    <h2 class='text-center text-warning'>Báo Cáo Thu Chi</h2>
-    <table class="table table-striped table-sm">
-      <thead>
-        <tr>
-          <th scope="col">Tên Khoản Thu - Chi</th>
-          <th scope="col">Số Tiền</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let expense of expenses">
-          <td scope="row">{{expense.description}}</td>
-          <td>{{expense.amount | number}}</td>
-        </tr>
-        <tr>
-          <th class="text-danger">Tổng Cộng</th>
-          <th class="text-danger">{{totalExpense | number}}</th>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>
