@@ -1,17 +1,22 @@
 <div class="container">
-  <h1 class="text-center text-danger">TRẠNG THÁI PHÒNG</h1>
-  <app-room-status [occupied]="occupied" [vacant]="vacant" [dirty]="dirty" [total]="total" [totalExpense]="totalExpense"></app-room-status>
-  <mat-form-field>
-    <input matInput 
-      [matDatepicker]="picker" 
-      placeholder="Xin Chọn Ngày" 
-      [(value)]="date"
-      (dateChange)="dateChange($event)">
+  <h1 class="text-success text-center">Quản Lý Khách Sạn Hoàng Long</h1>
+  <mat-form-field class="text-center">
+    <input matInput [matDatepicker]="picker" placeholder="Xin Chọn Ngày" [(value)]="date" (dateChange)="dateChange($event)">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker [startAt]="date" #picker></mat-datepicker>
   </mat-form-field>
-  <div id="accordion">
-    <app-order-status [orders]="orders" [total]="total"></app-order-status>
-    <app-expense [expenses]="expenses" [totalExpense]="totalExpense"></app-expense>
-  </div>
+  <mat-tab-group>
+    <mat-tab label="Thống Kê Chung">
+      <app-room-status [occupied]="occupied" [vacant]="vacant" [dirty]="dirty" [total]="total" [totalExpense]="totalExpense"></app-room-status>
+    </mat-tab>
+    <mat-tab label="Thống Kê Tiền Phòng">
+      <app-order-status [date]="date" [orders]="orders" [total]="total"></app-order-status>
+    </mat-tab>
+    <mat-tab label="Thống Kê Thu Chi">
+      <app-expense [date]="date" [expenses]="expenses" [totalExpense]="totalExpense"></app-expense>
+    </mat-tab>
+    <mat-tab label="Thống Kê Dịch Vụ / Nước">
+      <app-service-report [services]="services"></app-service-report>
+    </mat-tab>
+  </mat-tab-group>
 </div>

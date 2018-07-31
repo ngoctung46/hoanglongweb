@@ -1,3 +1,4 @@
+import { Service } from './../../interface/service.inteface';
 import { Component, OnInit } from '@angular/core';
 import { HotelDashboardService } from './hotel-dashboard.service';
 import { Room } from '../../interface/room.interface';
@@ -16,6 +17,7 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 export class HotelDashboardComponent implements OnInit {
   rooms: Room[] = [];
   orders: Order[] = [];
+  services: Service[] = [];
   occupied: Number;
   vacant: Number;
   dirty: Number;
@@ -33,12 +35,11 @@ export class HotelDashboardComponent implements OnInit {
   }
 
   private getOrders(): void {
-    this.service.getOrders().subscribe(orders => {
-      this.orders = orders
-        .filter((o: Order) => o.total !== 0 &&
-          new Date(o.checkOutTime.$date).getDate() === this.date.getDate() &&
-          new Date(o.checkOutTime.$date).getMonth() === this.date.getMonth() &&
-          new Date(o.checkOutTime.$date).getFullYear() === this.date.getFullYear());
+    this.service.getOrders().subscribe(res => {
+      this.orders = res.data
+        .filter((o: Order) => new Date(o.checkOutTime).getDate() === this.date.getDate() &&
+          new Date(o.checkOutTime).getMonth() === this.date.getMonth() &&
+          new Date(o.checkOutTime).getFullYear() === this.date.getFullYear());
       this.orders.forEach(o => {
         this.total = +this.total + +o.total;
       });
@@ -46,14 +47,20 @@ export class HotelDashboardComponent implements OnInit {
   }
 
   private getExpenses(): void {
-    this.service.getExpense().subscribe(expenses => {
-      this.expenses = expenses
-        .filter(e => new Date(e.createdAt.$date).getDate() === this.date.getDate() &&
-          new Date(e.createdAt.$date).getMonth() === this.date.getMonth() &&
-          new Date(e.createdAt.$date).getFullYear() === this.date.getFullYear());
+    this.service.getExpense().subscribe(res => {
+      this.expenses = res.data
+        .filter(e => new Date(e.createdAt).getDate() === this.date.getDate() &&
+          new Date(e.createdAt).getMonth() === this.date.getMonth() &&
+          new Date(e.createdAt).getFullYear() === this.date.getFullYear());
       this.expenses.forEach(e => {
         this.totalExpense = +this.totalExpense + +e.amount;
       });
+    });
+  }
+
+  private getServices(): void {
+    this.service.getServices().subscribe(res => {
+      this.services = res.data.filter(s => !s.isRoomRate);
     });
   }
 
@@ -62,6 +69,7 @@ export class HotelDashboardComponent implements OnInit {
     this.totalExpense = 0;
     this.getOrders();
     this.getExpenses();
+    this.getServices();
   }
 
   dateChange(event: MatDatepickerInputEvent<Date>) {

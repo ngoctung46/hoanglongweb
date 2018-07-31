@@ -10,6 +10,7 @@ import { HotelDashboardService } from '../hotel-dashboard.service';
 export class ExpenseComponent implements OnInit {
   @Input() expenses: any[] = [];
   @Input() totalExpense = 0;
+  @Input() date: Date;
   constructor( private service: HotelDashboardService) { }
 
   ngOnInit() {

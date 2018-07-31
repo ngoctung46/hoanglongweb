@@ -1,0 +1,23 @@
+<h3 class="text-center">
+  Thống kê dịch vụ + nước
+</h3>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Dịch vụ</th>
+      <th scope="col">Giá</th>
+      <th scope="col">Bán Ra</th>
+      <th scope="col">Tồn Kho</th>
+      <td scope="col">Tổng</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let service of services">
+      <th scope="row">{{service.name}}</th>
+      <td>{{service.currentPrice | number}}</td>
+      <td>{{service.sold | number}}</td>
+      <td>{{service.unitInStock | number }}</td>
+      <td>{{(service.unitInStock + +service.sold) | number }}</td>
+    </tr>
+  </tbody>
+</table>

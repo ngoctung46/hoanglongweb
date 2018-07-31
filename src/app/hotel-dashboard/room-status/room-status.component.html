@@ -1,73 +1,71 @@
 <div class="row">
   <div class="col-sm">
-      <div class="card">
-          <div class="card-header text-center text-white bg-success">
-            Phòng Trống
-          </div>
-          <div class="card-body">
-              <p class="h1 text-success text-center text-success">{{vacant}}</p>
-          </div>
-        </div>
+    <div class="card">
+      <div class="card-header text-center text-white bg-success">
+        Phòng Trống
+      </div>
+      <div class="card-body">
+        <p class="h1 text-success text-center text-success">{{vacant}}</p>
+      </div>
+    </div>
   </div>
   <div class="col-sm text-danger text-center">
-      <div class="card">
-          <div class="card-header text-center text-white bg-danger">
-            Phòng Có Khách
-          </div>
-          <div class="card-body">
-              <p class="h1 text-danger text-center">{{occupied}}</p>
-          </div>
-        </div>
+    <div class="card">
+      <div class="card-header text-center text-white bg-danger">
+        Phòng Có Khách
+      </div>
+      <div class="card-body">
+        <p class="h1 text-danger text-center">{{occupied}}</p>
+      </div>
+    </div>
   </div>
   <div class="col-sm text-secondary text-center">
-      <div class="card">
-          <div class="card-header text-center text-white bg-secondary">
-            Phòng Dơ
-          </div>
-          <div class="card-body">
-              <p class="h1 text-secondary text-center">{{dirty}}</p>
-          </div>
-        </div>
+    <div class="card">
+      <div class="card-header text-center text-white bg-secondary">
+        Phòng Dơ
+      </div>
+      <div class="card-body">
+        <p class="h1 text-secondary text-center">{{dirty}}</p>
+      </div>
+    </div>
   </div>
 </div>
 <br/>
 <br/>
-<app-room-list [rooms]="rooms"></app-room-list>
-<h1 class="text-center text-info">QUẢN LÝ THU CHI</h1>
-
 <div class="row">
   <div class="col-sm">
-      <div class="card">
-          <div class="card-header text-center text-white bg-info">
-            Tổng Tiền Phòng
-          </div>
-          <div class="card-body">
-              <p class="h1 text-info text-center">{{ total | number }}</p>
-          </div>
-        </div>
+    <div class="card">
+      <div class="card-header text-center text-white bg-info">
+        Tổng Tiền Phòng
+      </div>
+      <div class="card-body">
+        <p class="h1 text-info text-center">{{ total | number }}</p>
+      </div>
+    </div>
   </div>
   <div class="col-sm text-primary text-center">
-      <div class="card">
-          <div class="card-header text-center text-white bg-primary">
-            Tổng Thu Chi
-          </div>
-          <div class="card-body">
-              <p class="h1 text-primary text-center">{{ totalExpense | number }}</p>
-          </div>
-        </div>
+    <div class="card">
+      <div class="card-header text-center text-white bg-primary">
+        Tổng Thu Chi
+      </div>
+      <div class="card-body">
+        <p class="h1 text-primary text-center">{{ totalExpense | number }}</p>
+      </div>
+    </div>
   </div>
   <div class="col-sm text-warning text-center">
-      <div class="card">
-          <div class="card-header text-white bg-warning">
-            Tiền Mặt Hiện Có
-          </div>
-          <div class="card-body">
-              <p class="h1 text-warning text-center">{{ (total -- totalExpense) | number}}</p>
-          </div>
-        </div>
+    <div class="card">
+      <div class="card-header text-white bg-warning">
+        Tiền Mặt Hiện Có
+      </div>
+      <div class="card-body">
+        <p class="h1 text-warning text-center">{{ (total -- totalExpense) | number}}</p>
+      </div>
+    </div>
   </div>
   <br/>
   <br/>
 </div>
+<app-room-list [rooms]="rooms"></app-room-list>
 <br/>
 <br/>

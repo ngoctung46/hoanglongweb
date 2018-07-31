@@ -1,0 +1,29 @@
+<h3 class="text-center">Phòng {{ order.roomName }}</h3>
+<h1 class="text-center" mat-dialog-title>Nhận Phòng Lúc: {{order.checkInTime.$date  | date:'dd/MM/yyyy HH:mm'}}</h1>
+<h1 class="text-center" mat-dialog-title>Trả Phòng Lúc: {{order.checkOutTime.$date  | date:'dd/MM/yyyy HH:mm'}}</h1>
+<div mat-dialog-content>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Khoản Thu</th>
+        <th scope="col">Giá</th>
+        <th scope="col">Số Lượng</th>
+        <th scope="col">Tổng Cộng</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let orderline of orderLines">
+        <th scope="row">{{orderline.serviceName}}</th>
+        <td>{{orderline.price | number}}</td>
+        <td>{{orderline.quantity | number}}</td>
+        <td>{{orderline.total | number}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <th scope="row">Tổng Cộng</th>
+        <th scope="row">{{order.total | number}}</th>
+      </tr>
+    </tbody>
+  </table>
+</div>

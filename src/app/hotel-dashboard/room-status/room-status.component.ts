@@ -22,10 +22,10 @@ export class RoomStatusComponent implements OnInit {
   private getStatus(): void {
     this.service.getRooms().subscribe(
       res => {
-        this.rooms = res;
-        this.vacant = res.filter(r => r.status === '1').length;
-        this.occupied = res.filter(r => r.status === '0').length;
-        this.dirty = res.filter(r => r.status === '2').length;
+        this.rooms = res.data;
+        this.vacant = res.data.filter(r => r.status === '1').length;
+        this.occupied = res.data.filter(r => r.status === '0').length;
+        this.dirty = res.data.filter(r => r.status === '2').length;
         this.rooms.forEach(room => {
           switch (room.status) {
             case '0': room.status = 'Có Khách'; break;
