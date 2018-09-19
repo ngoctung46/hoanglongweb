@@ -12,7 +12,7 @@ const httpOptions = {
   })
 };
 
-const baseURI = `https://hoanglongserver.serveo.net/api`;
+const baseURI = `https://server.localtunnel.me/api`;
 @Injectable()
 export class HotelDashboardService {
 
